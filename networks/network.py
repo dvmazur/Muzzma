@@ -61,8 +61,6 @@ class AudioNet:
         t = floatX(np.zeros((1, self.n_chan, self.n_samples)))
         content = pic
 
-        print "T shape: ", t.shape
-
         eval_loss = EvalFunc(style, content, self.loss_func, self.n_chan, self.n_samples)
         eval_grad = EvalFunc(style, content, self.grad_func, self.n_chan, self.n_samples)
 
@@ -98,8 +96,6 @@ class EvalFunc:
         self.func = func
 
     def __call__(self, generated):
-        print "Gen dtype: ", generated.shape
-
         generated = floatX(generated.reshape((1, self.n_chan, self.n_samples)))
         return np.array(self.func(generated, self.style, self.content).flatten().astype('float64'))
 
@@ -127,4 +123,3 @@ if __name__ == "__main__":
     net = AudioNet()
 
     net.transfer_style(CONTENT_PATH, STYLE_PATH)
-
