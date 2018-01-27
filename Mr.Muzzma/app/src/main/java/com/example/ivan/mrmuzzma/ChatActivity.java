@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -35,7 +36,8 @@ public class ChatActivity extends AppCompatActivity {
         edit = (EditText)findViewById(R.id.message);
         play = (Button)findViewById(R.id.play);
         final Random rnd = new Random();
-        fileName =  Environment.getExternalStorageDirectory().getAbsolutePath() + "/rap.mp3";
+        fileName =  getIntent().getExtras().get("url").toString();
+        Log.i("url", fileName);
         messages = new ArrayList<>();
         final ListView listView = (ListView)findViewById(R.id.messages);
         adapter = new ChatArrayAdapter(getApplicationContext(), R.layout.right);

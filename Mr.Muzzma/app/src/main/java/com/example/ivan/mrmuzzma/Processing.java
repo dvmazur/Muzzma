@@ -36,16 +36,14 @@ public class Processing extends AppCompatActivity {
                 this, R.anim.rotate);
         king = (ImageView)findViewById(R.id.king);
         king.startAnimation(animation);
+        Log.i("rest", "ready");
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-
-                //-----------------------------------------------------------------
-
-                String url = "http://192.168.";
+                String url = "http://gymbank.site/dr";
                 File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(),
                         "/rap.3gp");
-
+                String s = "empty";
                 try {
                     HttpClient httpclient = new DefaultHttpClient();
                     HttpPost httppost = new HttpPost(url);
@@ -55,43 +53,32 @@ public class Processing extends AppCompatActivity {
                     httppost.setEntity(reqEntity);
                     HttpResponse response = httpclient.execute(httppost);
                     file.delete();
-                    file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), "/rap.mp3");
-                    if (file.exists()) file.delete();
-                    file.createNewFile();
                     InputStream stream = response.getEntity().getContent();
                     BufferedReader buf = new BufferedReader(new InputStreamReader(stream,"UTF-8"));
-                    StringBuilder sb = new StringBuilder();
-                    String s;
-                    FileWriter writer = new FileWriter(file);
-                    while(true )
-                    {
-                        s = buf.readLine();
-                        if(s==null || s.length()==0) break;
-                        writer.append(s);
-                    }
-                    writer.flush();
-                    writer.close();
+                    s = buf.readLine();
                     buf.close();
                     stream.close();
+                    Log.e("url", s);
                 } catch (Exception e) {
-                    Log.e("Http", "Server connection error" + url);
+                    Log.i("rest", e.getMessage());
                 }
-                handler.sendEmptyMessage(0);
+                Message message = new Message();
+                Bundle bundle = new Bundle();
+                bundle.putString("url", s);
+                message.setData(bundle);
+                handler.sendMessage(message);
             }
         });
         thread.start();
-    }
-
-    private void chat(){
-        Intent intent = new Intent(Processing.this, ChatActivity.class);
-        startActivity(intent);
     }
 
     Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            chat();
+            Intent intent = new Intent(Processing.this, ChatActivity.class);
+            intent.putExtra("url", msg.getData().get("url").toString());
+            startActivity(intent);
         }
 
     };
