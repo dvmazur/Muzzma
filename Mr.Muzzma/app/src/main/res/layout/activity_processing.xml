@@ -7,5 +7,25 @@
     tools:context="com.example.ivan.mrmuzzma.MainActivity">
 
 
+    <ImageView
+        android:id="@+id/king"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        app:srcCompat="@drawable/king"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <TextView
+        android:id="@+id/working"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:text="Наши продюссеры работают над вами..."
+        android:gravity="center"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/king"
+        app:layout_constraintRight_toRightOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
