@@ -72,17 +72,20 @@ class AudioNet:
 
         p = 2 * np.pi * np.random.random_sample(a.shape) - np.pi
         for i in range(500):
+            print "Iteration ", i
             S = a * np.exp(1j * p)
             x = librosa.istft(S)
             p = np.angle(librosa.stft(x, N_FFT))
 
-        return p
+        return x
 
-    def transfer_style(self, content_path, style_path):
-        content, _ = read_audio_spectum(content_path)
-        style, _ = read_audio_spectum(style_path)
+    def transfer_style(self, content_path, style_path, save_path="output.mp3"):
+        content, fs = read_audio_spectum(content_path)
+        style, fs = read_audio_spectum(style_path)
 
         out = self._optimize(content, style)
+
+        librosa.output.write_wav(save_path, out, fs)
 
 
 
@@ -121,5 +124,6 @@ if __name__ == "__main__":
     STYLE_PATH = "audio/futurama.mp3"
 
     net = AudioNet()
+    print "It compilled"
 
     net.transfer_style(CONTENT_PATH, STYLE_PATH)
