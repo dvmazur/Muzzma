@@ -2,6 +2,7 @@ package com.example.ivan.mrmuzzma;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
@@ -45,8 +46,8 @@ public class record extends AppCompatActivity {
     public void record(View view) {
         if (record) {
             recordStop();
-            playStart();
             vinil.clearAnimation();
+            transformAudio();
         } else {
             vinil.startAnimation(animation);
             recordStart();
@@ -102,6 +103,11 @@ public class record extends AppCompatActivity {
             mediaPlayer.release();
             mediaPlayer = null;
         }
+    }
+
+    private void transformAudio(){
+        Intent intent = new Intent(record.this, Processing.class);
+        startActivity(intent);
     }
 
 }

@@ -3,33 +3,45 @@ package com.example.ivan.mrmuzzma;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
     private ImageView imageView;
+    Button button;
+    Galary galary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         imageView = (ImageView)findViewById(R.id.imageView);
+        button = (Button)findViewById(R.id.button);
+        galary = new Galary();
         imageView.setOnTouchListener(new OnSwipeTouchListener(MainActivity.this){
             @Override
             public void onSwipeRight() {
-                imageView.setImageDrawable(getResources().getDrawable(R.drawable.kizaru));
+                Person cur = galary.getNext();
+                imageView.setImageDrawable(getResources().getDrawable(getResources().getIdentifier(cur.getDrawable(), "drawable",
+                        getApplicationContext().getPackageName())));
+                button.setText(cur.getName());
                 super.onSwipeRight();
             }
 
             @Override
             public void onSwipeLeft() {
-                imageView.setImageDrawable(getResources().getDrawable(R.drawable.kizaru2));
+                Person cur = galary.getPrev();
+                imageView.setImageDrawable(getResources().getDrawable(getResources().getIdentifier(cur.getDrawable(), "drawable",
+                        getApplicationContext().getPackageName())));
+                button.setText(cur.getName());
                 super.onSwipeLeft();
             }
 
