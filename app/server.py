@@ -18,21 +18,31 @@ def create_new_folder(local_dir):
         os.makedirs(newpath)
     return newpath
 
+def transfer(file):
+    return "uploads/output.mp3"
 
-@app.route('/', methods=['POST'])
+
+@app.route('/output', methods=['POST'])
 def api_root():
     app.logger.info(PROJECT_HOME)
-    if request.method == 'POST' and request.files['audio']:
+
+    if request.method == 'POST' and request.files["audio"]:
         app.logger.info(app.config['UPLOAD_FOLDER'])
-        img = request.files['audio']
-        img_name = secure_filename(img.filename)
+        track = request.files['audio']
+        img_name = secure_filename(track.filename)
         create_new_folder(app.config['UPLOAD_FOLDER'])
         saved_path = os.path.join(app.config['UPLOAD_FOLDER'], img_name)
         app.logger.info("saving {}".format(saved_path))
-        img.save(saved_path)
-        return send_from_directory(app.config['UPLOAD_FOLDER'], img_name, as_attachment=True)
+        track.save(saved_path)
+
+        output_file = transfer(saved_path)
+
+        return str({"response": {
+            "output_file_path": output_file
+        }})
+
     else:
-        return "Where is the image?"
+        return str({"response": "Error"})
 
 
 if __name__ == '__main__':
