@@ -15,6 +15,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -25,20 +28,27 @@ public class record extends AppCompatActivity {
     MediaPlayer mediaPlayer;
     private String fileName = "rap.3gpp";
     private Boolean record = false;
+    Animation animation;
+    private ImageView vinil;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
+        vinil = (ImageView)findViewById(R.id.vinil);
         fileName =  Environment.getExternalStorageDirectory() + "/rap.3gpp";
+        animation = AnimationUtils.loadAnimation(
+                this, R.anim.rotate);
     }
 
     public void record(View view) {
         if (record) {
             recordStop();
             playStart();
+            vinil.clearAnimation();
         } else {
+            vinil.startAnimation(animation);
             recordStart();
         }
         record = !record;

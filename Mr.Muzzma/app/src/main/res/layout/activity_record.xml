@@ -7,17 +7,6 @@
     tools:context="com.example.ivan.mrmuzzma.record">
 
 
-    <LinearLayout
-        android:id="@+id/chat"
-        android:layout_width="0dp"
-        android:layout_height="399dp"
-        android:orientation="vertical"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-
-    </LinearLayout>
-
     <Button
         android:id="@+id/start_record"
         android:layout_width="130dp"
@@ -28,6 +17,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="27dp"
         android:onClick="record"/>
+
+    <ImageView
+        android:id="@+id/vinil"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        app:srcCompat="@drawable/vinil"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginBottom="100dp"/>
 
 
 </android.support.constraint.ConstraintLayout>
