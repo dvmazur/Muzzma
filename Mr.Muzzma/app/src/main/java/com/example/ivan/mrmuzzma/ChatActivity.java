@@ -25,7 +25,7 @@ public class ChatActivity extends AppCompatActivity {
     private ArrayList<ChatMessage> messages;
     private EditText edit;
     ChatArrayAdapter adapter;
-    final String[] answers = {"cmon nigga!", "oh yeah", "homeboy", "great", "so/so", "a u stupid", "Dayuuuum", "Vabu Labu Dabs Dabs"};
+    final String[] answers = {"cmon!", "oh yeah", "homeboy", "great", "so/so", "a u stupid", "Dayuuuum", "Vabu Labu Dabs Dabs"};
     Boolean flag = false;
     Button play;
 
