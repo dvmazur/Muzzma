@@ -36,7 +36,7 @@
 
         <Button
             android:id="@+id/button"
-            android:layout_width="wrap_content"
+            android:layout_width="300dp"
             android:textSize="25dp"
             android:layout_height="100dp"
             android:text="KIZARU"

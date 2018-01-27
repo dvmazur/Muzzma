@@ -6,15 +6,78 @@
     android:layout_height="match_parent"
     tools:context="com.example.ivan.mrmuzzma.ChatActivity">
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="START"
-        android:onClick="start"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+
+    <ListView
+        android:id="@+id/messages"
+        android:stackFromBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/inter"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:divider="#00000000" />
+
+    <LinearLayout
+        android:id="@+id/inter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:divider="#11111111"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/message"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:layout_marginBottom="3dp"
+            android:background="@drawable/rounded_edittext"
+            android:inputType="text" />
+
+        <LinearLayout
+            android:id="@+id/button_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/new_track"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#c40bab"
+                android:onClick="oneMoreTrack"
+                android:layout_weight="1"
+                android:text="NEW"
+                tools:ignore="OnClick" />
+
+            <Button
+                android:id="@+id/play"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#c40bab"
+                android:layout_weight="1"
+                android:onClick="start"
+                android:text="PLAY" />
+
+            <Button
+                android:id="@+id/save"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#c40bab"
+                android:layout_weight="1"
+                android:onClick="save"
+                android:text="SAVE" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

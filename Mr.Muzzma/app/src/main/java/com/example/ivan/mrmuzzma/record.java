@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -38,7 +39,7 @@ public class record extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
         vinil = (ImageView)findViewById(R.id.vinil);
-        fileName =  Environment.getExternalStorageDirectory() + "/rap.3gpp";
+        fileName =  Environment.getExternalStorageDirectory().getAbsolutePath() + "/rap.3gp";
         animation = AnimationUtils.loadAnimation(
                 this, R.anim.rotate);
     }
@@ -46,10 +47,12 @@ public class record extends AppCompatActivity {
     public void record(View view) {
         if (record) {
             recordStop();
+            ((Button)view).setBackgroundResource(R.drawable.mic);
             vinil.clearAnimation();
             transformAudio();
         } else {
             vinil.startAnimation(animation);
+            ((Button)view).setBackgroundResource(R.drawable.mic_record);
             recordStart();
         }
         record = !record;

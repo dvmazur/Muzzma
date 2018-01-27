@@ -2,7 +2,8 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "26.0.1"
+    buildToolsVersion '26.0.2'
+    useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "com.example.ivan.mrmuzzma"
         minSdkVersion 15
@@ -26,5 +27,6 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha7'
+    compile group: 'org.apache.httpcomponents' , name: 'httpclient-android' , version: '4.3.5.1'
     testCompile 'junit:junit:4.12'
 }
