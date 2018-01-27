@@ -1,6 +1,7 @@
 from flask import Flask, url_for, send_from_directory, request
 import logging, os
 from werkzeug.utils import secure_filename
+from util import convert_3gp_to_mp
 
 app = Flask(__name__)
 file_handler = logging.FileHandler('server.log')
@@ -19,7 +20,7 @@ def create_new_folder(local_dir):
     return newpath
 
 def transfer(file):
-    return "uploads/output.mp3"
+    return "/uploads/eminem.mp3"
 
 
 @app.route('/output', methods=['POST'])
@@ -35,7 +36,9 @@ def api_root():
         app.logger.info("saving {}".format(saved_path))
         track.save(saved_path)
 
-        output_file = transfer(saved_path)
+        mp3_path = convert_3gp_to_mp(saved_path, app.config["UPLOAD_FOLDER"])
+
+        output_file = transfer(mp3_path)
 
         return str({"response": {
             "output_file_path": output_file
