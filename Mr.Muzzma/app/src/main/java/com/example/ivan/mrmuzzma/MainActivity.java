@@ -52,8 +52,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClick(View view) {
-        Intent intent = new Intent(MainActivity.this, RickyActivity.class);
-        startActivity(intent);
+        if (galary.getCurrent().getName() == "PUTIN"){
+            Intent intent = new Intent(MainActivity.this, RickyActivity.class);
+            startActivity(intent);
+        } else Toast.makeText(this, "Coming soon...", Toast.LENGTH_SHORT).show();
     }
 
     private final int MY_PERMISSIONS_RECORD_AUDIO = 1;

@@ -9,9 +9,9 @@ public class Galary {
         cursor = 0;
         people = new Person[]{
                new Person("KIZARU", "kizaru"),
-                new Person("KIZUAKYA", "kizaru2"),
                 new Person("EMINEM", "eminem"),
-                new Person("FRAY", "fray")
+                new Person("FRAY", "fray"),
+                new Person("PUTIN", "putin")
         };
     }
 
@@ -20,6 +20,10 @@ public class Galary {
         cursor++;
         Person cur = people[cursor];
         return cur;
+    }
+
+    public Person getCurrent(){
+        return people[cursor];
     }
 
     public Person getPrev(){
