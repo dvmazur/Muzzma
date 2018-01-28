@@ -1,4 +1,4 @@
-from flask import Flask, url_for, send_from_directory, request
+from flask import Flask, send_from_directory, request
 import logging, os
 from werkzeug.utils import secure_filename
 from networks.network import AudioNet
@@ -15,7 +15,7 @@ app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 net = AudioNet()
 
-lines = open("shaq").readlines()
+lines = open("app/shaq").readlines()
 
 def create_new_folder(local_dir):
     newpath = local_dir
@@ -43,7 +43,7 @@ def api_root():
         app.logger.info("saving {}".format(saved_path))
         track.save(saved_path)
 
-        output_file = transfer(saved_path, "../audio/futurama.mp3")
+        output_file = transfer(saved_path, "audio/futurama.mp3")
 
         return str({"response": {
             "output_file_path": output_file
@@ -56,10 +56,9 @@ def api_root():
 def serve_static(path):
     return send_from_directory(UPLOAD_FOLDER, path)
 
-@app.route("/rhyme", methods=["GET"])
-def hande_rhymes():
-    if request.args["phrase"]:
-        return random.choice(lines)
+@app.route("/rhyme/")
+def write_rhymes():
+    return random.choice(lines)
 
 
 
