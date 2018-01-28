@@ -11,18 +11,17 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.InputStreamEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+
+import cz.msebera.android.httpclient.HttpEntity;
+import cz.msebera.android.httpclient.client.methods.CloseableHttpResponse;
+import cz.msebera.android.httpclient.client.methods.HttpPost;
+import cz.msebera.android.httpclient.entity.mime.MultipartEntityBuilder;
+import cz.msebera.android.httpclient.impl.client.CloseableHttpClient;
+import cz.msebera.android.httpclient.impl.client.HttpClients;
 
 public class Processing extends AppCompatActivity {
 
@@ -40,31 +39,31 @@ public class Processing extends AppCompatActivity {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                String url = "http://gymbank.site/dr";
+                String url = "http://10.39.1.82:5000/input";
                 File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(),
-                        "/rap.3gp");
+                        "/rap.mp3");
                 String s = "empty";
+                CloseableHttpResponse response = null;
+                CloseableHttpClient client = null;
                 try {
-                    HttpClient httpclient = new DefaultHttpClient();
-                    HttpPost httppost = new HttpPost(url);
-                    InputStreamEntity reqEntity = new InputStreamEntity(new FileInputStream(file), -1);
-                    reqEntity.setContentType("binary/octet-stream");
-                    reqEntity.setChunked(true);
-                    httppost.setEntity(reqEntity);
-                    HttpResponse response = httpclient.execute(httppost);
-                    file.delete();
-                    InputStream stream = response.getEntity().getContent();
-                    BufferedReader buf = new BufferedReader(new InputStreamReader(stream,"UTF-8"));
-                    s = buf.readLine();
-                    buf.close();
-                    stream.close();
-                    Log.e("url", s);
+                    try {
+                        client = HttpClients.createDefault();
+                        HttpPost httpPost = new HttpPost(url);
+                        MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+                        builder.addBinaryBody("audio", file);
+                        HttpEntity multipart = builder.build();
+                        httpPost.setEntity(multipart);
+                        response = client.execute(httpPost);
+                    } catch (Exception e) {
+                        Log.i("ERROR", e.getMessage());
+                    }
+                    client.close();
                 } catch (Exception e) {
                     Log.i("rest", e.getMessage());
                 }
                 Message message = new Message();
                 Bundle bundle = new Bundle();
-                bundle.putString("url", s);
+                bundle.putString("url", "http://10.39.1.82:5000/output/out.mp3");
                 message.setData(bundle);
                 handler.sendMessage(message);
             }

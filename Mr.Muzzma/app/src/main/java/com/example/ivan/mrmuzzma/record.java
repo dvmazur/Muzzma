@@ -28,7 +28,7 @@ public class record extends AppCompatActivity {
 
     MediaRecorder mediaRecorder;
     MediaPlayer mediaPlayer;
-    private String fileName = "rap.3gpp";
+    private String fileName = "rap.mp3";
     private Boolean record = false;
     Animation animation;
     private ImageView vinil;
@@ -39,7 +39,7 @@ public class record extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
         vinil = (ImageView)findViewById(R.id.vinil);
-        fileName =  Environment.getExternalStorageDirectory().getAbsolutePath() + "/rap.3gp";
+        fileName =  Environment.getExternalStorageDirectory().getAbsolutePath() + "/rap.mp3";
         animation = AnimationUtils.loadAnimation(
                 this, R.anim.rotate);
     }
@@ -73,7 +73,7 @@ public class record extends AppCompatActivity {
             outFile.createNewFile();
             mediaRecorder = new MediaRecorder();
             mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-            mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+            mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
             mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
             mediaRecorder.setOutputFile(fileName);
             mediaRecorder.prepare();
