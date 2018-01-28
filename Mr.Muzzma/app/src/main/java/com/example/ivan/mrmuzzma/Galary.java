@@ -10,7 +10,8 @@ public class Galary {
         people = new Person[]{
                new Person("KIZARU", "kizaru"),
                 new Person("KIZUAKYA", "kizaru2"),
-                new Person("EMINEM", "eminem")
+                new Person("EMINEM", "eminem"),
+                new Person("FRAY", "fray")
         };
     }
 

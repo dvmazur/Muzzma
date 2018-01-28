@@ -1,10 +1,12 @@
 package com.example.ivan.mrmuzzma;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.speech.RecognizerIntent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,13 +18,13 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Random;
 
 public class ChatActivity extends AppCompatActivity {
 
     private String fileName;
     private MediaPlayer mediaPlayer;
-    private ArrayList<ChatMessage> messages;
     private EditText edit;
     ChatArrayAdapter adapter;
     final String[] answers = {"cmon!", "oh yeah", "homeboy", "great", "so/so", "a u stupid", "Dayuuuum", "Vabu Labu Dabs Dabs"};
@@ -37,8 +39,6 @@ public class ChatActivity extends AppCompatActivity {
         play = (Button)findViewById(R.id.play);
         final Random rnd = new Random();
         fileName =  getIntent().getExtras().get("url").toString();
-        Log.i("url", fileName);
-        messages = new ArrayList<>();
         final ListView listView = (ListView)findViewById(R.id.messages);
         adapter = new ChatArrayAdapter(getApplicationContext(), R.layout.right);
         listView.setAdapter(adapter);
@@ -128,11 +128,12 @@ public class ChatActivity extends AppCompatActivity {
     };
 
     public void oneMoreTrack(View view) {
-        Intent intent = new Intent(ChatActivity.this, record.class);
+        Intent intent = new Intent(ChatActivity.this, MainActivity.class);
         startActivity(intent);
     }
 
     public void save(View view) {
         Toast.makeText(this, "Comming soon...", Toast.LENGTH_SHORT).show();
     }
+
 }

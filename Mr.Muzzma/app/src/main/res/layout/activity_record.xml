@@ -11,12 +11,12 @@
         android:id="@+id/start_record"
         android:layout_width="130dp"
         android:layout_height="130dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/mic"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        android:onClick="record"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="27dp"
-        android:onClick="record"/>
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
 
     <ImageView
         android:id="@+id/vinil"
@@ -25,9 +25,59 @@
         app:srcCompat="@drawable/vinil"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginBottom="100dp"/>
+        app:layout_constraintBottom_toTopOf="@+id/start_record"
+        app:layout_constraintTop_toBottomOf="@+id/hintView"/>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/hintView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <TextView
+            android:id="@+id/hint"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="25dp"
+            android:maxWidth="300dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="5dp"
+            app:layout_constraintLeft_toLeftOf="@+id/prev"
+            app:layout_constraintRight_toRightOf="@+id/next"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:scrollHorizontally="true"
+
+            android:singleLine="true"/>
+
+        <Button
+            android:id="@+id/next"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="2dp"
+            android:onClick="next"
+            android:background="@drawable/next" />
+
+        <Button
+            android:id="@+id/prev"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="2dp"
+            android:onClick="prev"
+            android:background="@drawable/prev"/>
+
+    </android.support.constraint.ConstraintLayout>
 
 
 </android.support.constraint.ConstraintLayout>

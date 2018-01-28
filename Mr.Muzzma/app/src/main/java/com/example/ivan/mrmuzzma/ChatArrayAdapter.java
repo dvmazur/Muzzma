@@ -14,6 +14,7 @@ class ChatArrayAdapter extends ArrayAdapter<ChatMessage> {
 
     private TextView chatText;
     private List<ChatMessage> chatMessageList = new ArrayList<ChatMessage>();
+    private ArrayList<String> chosen = new ArrayList<>();
     private Context context;
 
     @Override
@@ -36,14 +37,32 @@ class ChatArrayAdapter extends ArrayAdapter<ChatMessage> {
         return this.chatMessageList.get(index);
     }
 
+    public void setChosen(int index) {
+        getItem(index).chose = !getItem(index).chose;
+    }
+
+    public String[] getAllChosen(){
+        chosen = new ArrayList<>();
+        for (ChatMessage message : chatMessageList) {
+            if (message.chose) chosen.add(message.message);
+        }
+        String[] answer = new String[chosen.size()];
+        for (int i = 0; i < answer.length; i++){
+            answer[i] =  chosen.get(i);
+        }
+        return answer;
+    }
+
     public View getView(int position, View convertView, ViewGroup parent) {
         ChatMessage chatMessageObj = getItem(position);
         View row = convertView;
         LayoutInflater inflater = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (chatMessageObj.left) {
-            row = inflater.inflate(R.layout.right, parent, false);
+            if (chatMessageObj.chose) row = inflater.inflate(R.layout.right_c, parent, false);
+            else row = inflater.inflate(R.layout.right, parent, false);
         }else{
-            row = inflater.inflate(R.layout.left, parent, false);
+            if (chatMessageObj.chose) row = inflater.inflate(R.layout.left_c, parent, false);
+            else row = inflater.inflate(R.layout.left, parent, false);
         }
         chatText = (TextView) row.findViewById(R.id.msgr);
         chatText.setText(chatMessageObj.message);

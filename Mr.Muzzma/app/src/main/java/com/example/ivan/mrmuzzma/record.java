@@ -1,26 +1,19 @@
 package com.example.ivan.mrmuzzma;
 
-import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Build;
 import android.os.Environment;
-import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import java.io.File;
 
@@ -32,16 +25,22 @@ public class record extends AppCompatActivity {
     private Boolean record = false;
     Animation animation;
     private ImageView vinil;
+    private TextView hint;
+    String[] text;
+    int index = 0;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
+        hint = (TextView)findViewById(R.id.hint);
+        text = getIntent().getStringArrayExtra("chose");
         vinil = (ImageView)findViewById(R.id.vinil);
         fileName =  Environment.getExternalStorageDirectory().getAbsolutePath() + "/rap.mp3";
         animation = AnimationUtils.loadAnimation(
                 this, R.anim.rotate);
+        hint.setText(text[0]);
     }
 
     public void record(View view) {
@@ -113,4 +112,17 @@ public class record extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void next(View view) {
+        if (index < text.length - 1){
+            index++;
+            hint.setText(text[index]);
+        }
+    }
+
+    public void prev(View view) {
+        if (index > 0){
+            index--;
+            hint.setText(text[index]);
+        }
+    }
 }
