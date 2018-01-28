@@ -2,7 +2,7 @@ from flask import Flask, url_for, send_from_directory, request
 import logging, os
 from werkzeug.utils import secure_filename
 from networks.network import AudioNet
-from util import convert_3gp_to_mp
+import random
 
 app = Flask(__name__, static_url_path="/output/")
 file_handler = logging.FileHandler("server.log")
@@ -14,6 +14,8 @@ UPLOAD_FOLDER = "{}/uploads/".format(PROJECT_HOME)
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 net = AudioNet()
+
+lines = open("shaq").readlines()
 
 def create_new_folder(local_dir):
     newpath = local_dir
@@ -53,6 +55,13 @@ def api_root():
 @app.route("/output/<path:path>", methods=["GET"])
 def serve_static(path):
     return send_from_directory(UPLOAD_FOLDER, path)
+
+@app.route("/rhyme", methods=["GET"])
+def hande_rhymes():
+    if request.args["phrase"]:
+        return random.choice(lines)
+
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=False)
