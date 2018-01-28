@@ -1,7 +1,7 @@
 import requests
 
-url="http://localhost:5000/upload"
+files = {"audio": open("/home/deniska/muzzma/audio/fire.mp3")}
 
-files = {'audio': open('/home/deniska/muzzma/audio/eminem.mp3', 'rb')}
+response = requests.post("http://localhost:5000/input", files=files)
 
-print requests.post(url, files=files).text
+print response.text

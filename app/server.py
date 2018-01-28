@@ -1,17 +1,19 @@
 from flask import Flask, url_for, send_from_directory, request
 import logging, os
 from werkzeug.utils import secure_filename
+from networks.network import AudioNet
 from util import convert_3gp_to_mp
 
-app = Flask(__name__)
-file_handler = logging.FileHandler('server.log')
+app = Flask(__name__, static_url_path="/output/")
+file_handler = logging.FileHandler("server.log")
 app.logger.addHandler(file_handler)
 app.logger.setLevel(logging.INFO)
 
 PROJECT_HOME = os.path.dirname(os.path.realpath(__file__))
-UPLOAD_FOLDER = '{}/uploads/'.format(PROJECT_HOME)
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+UPLOAD_FOLDER = "{}/uploads/".format(PROJECT_HOME)
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
+net = AudioNet()
 
 def create_new_folder(local_dir):
     newpath = local_dir
@@ -19,26 +21,27 @@ def create_new_folder(local_dir):
         os.makedirs(newpath)
     return newpath
 
-def transfer(file):
-    return "/uploads/eminem.mp3"
+def transfer(content, style):
+    net.transfer_style(content, style, UPLOAD_FOLDER+"/out.mp3")
+
+    return "localhost:5000/output/out.mp3"
 
 
-@app.route('/output', methods=['POST'])
+# receive file and transfer style
+@app.route("/input", methods=["POST"])
 def api_root():
     app.logger.info(PROJECT_HOME)
 
-    if request.method == 'POST' and request.files["audio"]:
-        app.logger.info(app.config['UPLOAD_FOLDER'])
-        track = request.files['audio']
+    if request.method == "POST" and request.files["audio"]:
+        app.logger.info(app.config["UPLOAD_FOLDER"])
+        track = request.files["audio"]
         img_name = secure_filename(track.filename)
-        create_new_folder(app.config['UPLOAD_FOLDER'])
-        saved_path = os.path.join(app.config['UPLOAD_FOLDER'], img_name)
+        create_new_folder(app.config["UPLOAD_FOLDER"])
+        saved_path = os.path.join(app.config["UPLOAD_FOLDER"], img_name)
         app.logger.info("saving {}".format(saved_path))
         track.save(saved_path)
 
-        mp3_path = convert_3gp_to_mp(saved_path, app.config["UPLOAD_FOLDER"])
-
-        output_file = transfer(mp3_path)
+        output_file = transfer(saved_path, "../audio/futurama.mp3")
 
         return str({"response": {
             "output_file_path": output_file
@@ -47,6 +50,9 @@ def api_root():
     else:
         return str({"response": "Error"})
 
+@app.route("/output/<path:path>", methods=["GET"])
+def serve_static(path):
+    return send_from_directory(UPLOAD_FOLDER, path)
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=False)
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", debug=False)
